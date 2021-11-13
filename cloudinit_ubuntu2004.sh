@@ -39,14 +39,20 @@ else
 
 fi
 
-for ((VMID=101;;VMID++))
-do
-	if (( $(qm list | grep -Eo "^ +[0-9]{3}" | sed "s/\ //g" | grep -c $VMID) == 0 ))
-	then
-		qm clone 9000 $VMID --name ubuntu-2004-$VMID
-		qm start $VMID
-		echo "VM $VMID Created"
-		exit
-	fi
-done
-
+if [[ $(qm list | grep -Eo "^ +[0-9]{3,4}" | sed "s/\ //g" | grep -c 9000) == 0 ]]
+then
+	echo "No template Created"
+	exit
+	
+else
+	for ((VMID=100;;VMID++))
+	do
+		if (( $(qm list | grep -Eo "^ +[0-9]{3}" | sed "s/\ //g" | grep -c $VMID) == 0 ))
+		then
+			qm clone 9000 $VMID --name ubuntu-2004-$VMID
+			qm start $VMID
+			echo "VM $VMID Created"
+			exit
+		fi
+	done
+fi
