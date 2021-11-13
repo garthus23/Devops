@@ -38,6 +38,15 @@ else
 	rm -v focal-server-cloudimg-amd64.img
 
 fi
-#qm clone 9000 101 --name ubuntu-2004-1
-#qm start 101
+
+for ((VMID=101;;VMID++))
+do
+	if (( $(qm list | grep -Eo "^ +[0-9]{3}" | sed "s/\ //g" | grep -c $VMID) == 0 ))
+	then
+		qm clone 9000 $VMID --name ubuntu-2004-$VMID
+		qm start $VMID
+		echo "VM $VMID Created"
+		exit
+	fi
+done
 
