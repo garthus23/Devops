@@ -23,8 +23,8 @@ else
 	qm resize 9001 scsi0 +100G
 
 	# Using a  dhcp server on vmbr1 or use static IP
-	qm set 9001 --ipconfig0 ip=dhcp
-	#qm set 9001 --ipconfig0 ip=10.10.10.222/24,gw=10.10.10.1
+	#qm set 9001 --ipconfig0 ip=dhcp
+		
 
 	# user authentication for 'ubuntu' user (optional password)
 	qm set 9001 --sshkey /home/greg/.ssh/vm.pub
@@ -49,11 +49,26 @@ else
 	do
 		if (( $(qm list | grep -Eo "^ +[0-9]{3}" | sed "s/\ //g" | grep -c $VMID) == 0 ))
 		then
-			qm clone 9001 $VMID --name centos-8-$VMID
-			qm start $VMID
-			echo "VM $VMID Created"
-			exit
+			break
 		fi
 	done
+	qm clone 9001 $VMID --name centos-8-$VMID
+	for ((VMIP=2;ip != 255;VMIP++))
+	do
+		timeout 0.005 ping -c 1 10.10.10.$VMIP 2>&1 >/dev/null
+		if [[ $? != 0 ]]
+		then
+			break
+		fi
+	done	
+	qm set $VMID --ipconfig0 ip=10.10.10.$VMIP/24,gw=10.10.10.1
+	qm start $VMID
+	echo "VM $VMID Created"
 fi
 
+if [[ $(grep -c "10.10.10.$VMIP" /etc/hosts) != 0 ]]
+then 
+	sed -i "/10.10.10.$VMIP/d" /etc/hosts
+fi
+
+echo "10.10.10.$VMIP	centos-8-$VMID" >> /etc/hosts
