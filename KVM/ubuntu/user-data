@@ -1,0 +1,7 @@
+#cloud-config
+user: ubuntu
+password: toto 
+chpasswd: {expire: False}
+ssh_pwauth: True
+ssh_authorized_keys:
+  - $PUBKEY
