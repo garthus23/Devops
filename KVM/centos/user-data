@@ -1,5 +1,5 @@
 #cloud-config
-user: ubuntu
+user: centos
 password: toto 
 chpasswd: {expire: False}
 ssh_pwauth: True
