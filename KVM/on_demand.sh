@@ -9,14 +9,14 @@ then
 	if [[ $1 == 'centos' ]]
 	then
 		cd centos
-		sed -ie s/"IMAGE_NAME.*"/"IMAGE_NAME=$2"/g vars.sh
+		sed -i s/"IMAGE_NAME.*"/"IMAGE_NAME=$2"/g vars.sh
 		echo "local-hostname: $2" > meta-data
 		./cloudinit_centos.sh
 	fi
 	if [[ $1 == 'ubuntu' ]]
 	then
 		cd ubuntu
-		sed -ie s/"IMAGE_NAME.*"/"IMAGE_NAME=$2"/g vars.sh
+		sed -i s/"IMAGE_NAME.*"/"IMAGE_NAME=$2"/g vars.sh
 		echo "local-hostname: $2" > meta-data
 		./cloudinit_ubuntu.sh
 	fi
