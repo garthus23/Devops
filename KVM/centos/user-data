@@ -1,9 +1,0 @@
-#cloud-config
-user: centos
-password: toto 
-chpasswd: {expire: False}
-ssh_pwauth: True
-ssh_authorized_keys:
-  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMbsBJ/tjRoH/UIDAjHde7AgraUg7E2pOpo2IGG9A2k9 greg@ryzen
-  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIIqaA4ZV1iGfwNLoZHzslmEg9vwoa89dFUP9/EBrTma ubuntu@dev
-
