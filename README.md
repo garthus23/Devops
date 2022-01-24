@@ -1,3 +1,13 @@
-# proxmoxVE
+# DEVOPS lab to Work On
 
-## Template Creation and VM creation
+## KVM
+
+ - Cloud init VM creation
+
+## Proxmox 
+
+  - Cloud init VM creation
+
+## Ansible 
+
+  - In progress
