@@ -1,11 +1,11 @@
 
-###Create VM :
+### Create VM :
 ```
-./on_demand.sh <OS> <VMNAME>
+./on_demand.sh <DIST> <VMNAME>
 ```
-2 dist Available : centos or ubuntu <OS>
+2 DIST available : centos or ubuntu
 
-###List VM Network :
+### List VM Network :
 ```
 ./list_vm_ip.sh
 ```
