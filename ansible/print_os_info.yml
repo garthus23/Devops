@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+    - debug:
+        msg: 
+          - "hostname     : {{ ansible_hostname }}"
+          - "kernel       : {{ ansible_kernel }}"
+          - "distrib      : {{ ansible_distribution }} {{ ansible_distribution_version }}"
+          - "ip addresses : {{ ansible_all_ipv4_addresses }}"

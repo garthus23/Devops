@@ -1,0 +1,5 @@
+## ping 
+ansible 192.168.1.xx -u user -m ping
+## get hosts VARS 
+ansible 192.168.1.xx -u user -m ansible.builtin.setup
+
