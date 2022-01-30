@@ -1,0 +1,19 @@
+## search docker image remotely
+docker search httpd:latest
+
+## Retrieve image from Docker Hub
+docker pull httpd:latest
+
+## manually create/launch a container
+docker run --name httpd -p 8080:80 -d httpd:2.4
+
+## list running containers and list all containers
+docker ps
+docker ps -a
+
+## stop and delete a container
+docker stop httpd
+docker rm httpd
+
+## mount ro volume 
+docker run --name httpd -p 8080:80 -v localdir:containerdir:ro -d httpd:2.4
