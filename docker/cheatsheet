@@ -17,3 +17,30 @@ docker rm httpd
 
 ## mount ro volume 
 docker run --name httpd -p 8080:80 -v localdir:containerdir:ro -d httpd:2.4
+
+## enter into the container
+docker exec -it containername bash
+
+## create docker image
+docker commit 9a85029f811f example/widgetfactory:v1
+
+## list docker images
+docker images
+
+## remove images 
+docker rmi example/widgetfactory:v1
+
+## list Volumes
+docker volume ls
+
+## find volume from container
+docker inspect $containerid | grep -A 10 'Mounts'
+
+## find volume source
+docker inspect $volumeid
+
+## docker volume create
+docker volume create $volumname
+
+## remove unused volume
+docker volume prune 
