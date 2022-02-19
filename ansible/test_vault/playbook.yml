@@ -1,0 +1,10 @@
+---
+- name : echo the encrypted password
+  hosts: localhost
+  vars:
+  vars_files:
+    - ./vars
+  tasks:
+  - name: echo the password
+    ansible.builtin.debug:
+      msg: my password is {{ password }}
