@@ -7,9 +7,21 @@ ansible 192.168.1.xx -u user -m ansible.builtin.setup
 ## ansible vault encrypt file
 ansible-vault create --vault-id my_new_password@prompt vars
 
-## decrypt vault encrypted file
+## edit vault encrypted file
 ansible-vault edit --vault-id my_new_password vars
 
 ## play a playbook with encrypted file
 ansible-playbook myplaybook.yml --ask-vault-pass
 
+## Ansible galaxy : search role from public repo 
+# the search on cli is complicated, should use web browser https://galaxy.ansible.com/
+ansible-galaxy search role_name --author author_name
+
+## Create roles directory structure
+ansible-galaxy init role_name
+
+## list installed roles
+ansible-galaxy list
+
+## remove installed role
+ansible-galaxy remove role_name
