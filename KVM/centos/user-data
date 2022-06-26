@@ -1,0 +1,21 @@
+#cloud-config
+
+ssh_pwauth: True
+ssh_authorized_keys:
+   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPY2sEsmo/9aY/Khdt9WaPzf5AgIruEruxgns3EzhJeH greg@debian
+
+chpasswd:
+   list: |
+      cloud-user:password
+   expire: False
+
+write_files:
+  - path: /etc/dnf/dnf.conf
+    content: | 
+       proxy=http://172.16.0.254:55500/
+    append: true
+
+package_update: true
+package_upgrade: true
+packages:
+   - ansible-core

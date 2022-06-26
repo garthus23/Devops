@@ -6,17 +6,14 @@
 
 if [[ $1 && $2 ]]
 then
-	sed -i s/"IMAGE_NAME.*"/"IMAGE_NAME=$2"/g vars.sh
-	echo "local-hostname: $2" > meta-data
-	
-	if [[ $1 == 'centos' ]]
-	then
-		./cloudinit_centos.sh
-	fi
-	if [[ $1 == 'ubuntu' ]]
-	then
-		./cloudinit_ubuntu.sh
-	fi
-else
-	echo './on_demand.sh $OS $VMNAME'
+    if [[ $1 == 'centos' ]] || [[ $1 == 'ubuntu' ]]
+    then
+        cd $1
+        sed -i s/"IMAGE_NAME.*"/"IMAGE_NAME=$2"/g vars.sh
+        echo "local-hostname: $2" > meta-data
+        ./cloudinit.sh
+    else
+        echo './on_demand.sh $OS $VMNAME'
+        exit 1
+    fi
 fi
