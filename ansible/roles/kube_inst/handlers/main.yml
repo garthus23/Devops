@@ -1,0 +1,6 @@
+---
+# handlers file for kube_inst
+- name: verify_toto 
+  ansible.builtin.command: ls /tmp/tato
+  register: result
+  failed_when: result.rc != 0

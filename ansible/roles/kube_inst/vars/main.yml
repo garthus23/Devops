@@ -1,0 +1,5 @@
+---
+# vars file for kube_inst
+
+proxy_env:
+   https_proxy: http://172.16.0.254:55500

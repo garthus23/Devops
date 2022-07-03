@@ -1,0 +1,10 @@
+---
+# tasks file for kube_inst
+#- include_tasks: create_toto.yml
+
+
+- include_tasks: requirements_centos.yml
+  when: ansible_facts['distribution'] == 'CentOS'
+
+- include_tasks: requirements_ubuntu.yml
+  when: ansible_facts['distribution'] == 'Ubuntu'
