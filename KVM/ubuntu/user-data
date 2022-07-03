@@ -1,11 +1,19 @@
 #cloud-config
 
-ssh_pwauth: True
-ssh_authorized_keys:
-   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPY2sEsmo/9aY/Khdt9WaPzf5AgIruEruxgns3EzhJeH greg@debian
+users:
+   - default
+   - name: ansible
+     sudo: ALL=(ALL) NOPASSWD:ALL
+     groups: users, admin
+     lock_passwd: true
+     ssh_pwauth: True
+     ssh_authorized_keys:
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPY2sEsmo/9aY/Khdt9WaPzf5AgIruEruxgns3EzhJeH greg@debian
+
 chpasswd:
    list: |
       ubuntu:password
+      ansible:password
    expire: False
 
 apt:
