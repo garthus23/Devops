@@ -1,0 +1,5 @@
+---
+- hosts: allnodes
+  become: yes
+  roles:
+    - kube_inst

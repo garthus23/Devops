@@ -17,11 +17,13 @@ chpasswd:
       ansible:password
    expire: False
 
-write_files:
-  - path: /etc/dnf/dnf.conf
-    content: | 
-       proxy=http://172.16.0.254:55500/
-    append: true
+##  Set proxy ##
+
+#write_files:
+#  - path: /etc/dnf/dnf.conf
+#    content: | 
+#       proxy=http://172.16.0.254:55500/
+#    append: true
 
 package_update: true
 package_upgrade: true

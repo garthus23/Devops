@@ -11,13 +11,14 @@
 - name: Set selinux in permissive mode
   ansible.builtin.shell: setenforce 0 && sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 
-- name: Install kubelet kubeadm kubectl
+- name: Install Packages containerd, kubelet,kubeadm,kubectl
   ansible.builtin.package:
     name:
-      - docker-ce
-      - docker-ce-cli
+      - containerd
       - kubelet
       - kubeadm
       - kubectl
     state: present
     update_cache: yes
+  notify:
+  - start containerd

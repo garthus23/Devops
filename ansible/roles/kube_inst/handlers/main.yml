@@ -1,6 +1,28 @@
 ---
 # handlers file for kube_inst
-- name: verify_toto 
-  ansible.builtin.command: ls /tmp/tato
-  register: result
-  failed_when: result.rc != 0
+- name: restart docker
+  ansible.builtin.service:
+    name: docker
+    state: restarted
+    enabled: yes
+
+- name: restart containerd
+  ansible.builtin.service:
+    name: containerd
+    state: restarted
+    enabled: yes
+
+- name: start containerd
+  ansible.builtin.service:
+    name: containerd
+    state: started
+    enabled: yes
+
+- name: load br_netfilter module
+  ansible.builtin.shell:
+    cmd: modprobe br_netfilter
+
+- name: kubelet restart
+  ansible.builtin.service:
+    name: kubelet
+    enabled: yes
