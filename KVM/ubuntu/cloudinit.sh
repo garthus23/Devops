@@ -29,7 +29,7 @@ fi
 genisoimage  -output $IMAGE_FOLDER/cidata.iso -V cidata -r -J user-data meta-data
 
 # launch install
-virt-install --connect qemu:///system --virt-type kvm --name $IMAGE_NAME --ram 2048 --vcpus=2 --os-variant ubuntu20.04 --import --disk path=$DISK_FOLDER/$IMAGE_NAME.qcow2,format=qcow2 --disk path=$IMAGE_FOLDER/cidata.iso,device=cdrom --network network=$NET --graphics none --noautoconsole
+virt-install --connect qemu:///system --virt-type kvm --name $IMAGE_NAME --ram 2048 --vcpus=2 --os-variant ubuntu20.04 --import --disk path=$DISK_FOLDER/$IMAGE_NAME.qcow2,format=qcow2 --disk path=$IMAGE_FOLDER/cidata.iso,device=cdrom --network network=$NET --graphics spice,listen=127.0.0.1 --noautoconsole
 
 # detach cdrom on next boot
 virsh change-media $IMAGE_NAME $IMAGE_FOLDER/cidata.iso --config --eject
