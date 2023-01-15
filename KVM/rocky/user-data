@@ -3,19 +3,19 @@
 
 users:
    - default
-   - name: ansible
+   - name: greg
      sudo: ALL=(ALL) NOPASSWD:ALL
      groups: users, admin
      lock_passwd: true
-     ssh_pwauth: True
+     ssh_pwauth: False
      ssh_authorized_keys:
-        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPY2sEsmo/9aY/Khdt9WaPzf5AgIruEruxgns3EzhJeH greg@debian
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpfCPWEyaZAO/QALa5MpRTTkZV7EDDXBpj+xU7bMY13 greg@tower
 
-chpasswd:
-   list: |
-      cloud-user:password
-      ansible:password
-   expire: False
+#chpasswd:
+#   list: |
+#      cloud-user:password
+#      ansible:password
+#   expire: False
 
 ##  Set proxy ##
 
