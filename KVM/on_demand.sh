@@ -8,8 +8,8 @@ if [[ $1 && $2 ]]
 then
     if [[ $1 == 'rocky' ]] || [[ $1 == 'ubuntu' ]]
     then
-        cd $1
         sed -i s/"IMAGE_NAME.*"/"IMAGE_NAME=$2"/g vars.sh
+        cd $1
         echo "local-hostname: $2" > meta-data
         ./cloudinit.sh
     else

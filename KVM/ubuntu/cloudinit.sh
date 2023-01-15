@@ -2,9 +2,9 @@
 # cloud image deploy ubuntu 20.04 on Qemu/KVM
 
 # set var file 
-if [[ -f vars.sh ]]
+if [[ -f ../vars.sh ]]
 then
-	. vars.sh
+	. ../vars.sh
 fi
 
 DLNAME='https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img'

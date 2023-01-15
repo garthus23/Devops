@@ -4,10 +4,11 @@
 users:
    - default
    - name: greg
+     shell: /bin/bash
      sudo: ALL=(ALL) NOPASSWD:ALL
      groups: users, admin
      lock_passwd: true
-     ssh_pwauth: False
+     ssh_pwauth: false
      ssh_authorized_keys:
         - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpfCPWEyaZAO/QALa5MpRTTkZV7EDDXBpj+xU7bMY13 greg@tower
 
