@@ -1,8 +1,8 @@
 ---
 # tasks file for kube_inst
 
-- include_tasks: requirements_centos.yml
-  when: ansible_facts['distribution'] == 'CentOS'
+- include_tasks: requirements_rocky.yml
+  when: ansible_facts['distribution'] == 'Rocky'
 
 - include_tasks: requirements_ubuntu.yml
   when: ansible_facts['distribution'] == 'Ubuntu'
@@ -10,5 +10,5 @@
 - include_tasks: master_node.yml
   when: inventory_hostname in groups['masternode']
 
-- include_tasks: workers.yml
-  when: inventory_hostname in groups['workers']
+  #- include_tasks: workers.yml
+  # when: inventory_hostname in groups['workers']

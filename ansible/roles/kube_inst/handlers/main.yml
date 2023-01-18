@@ -22,7 +22,7 @@
   ansible.builtin.shell:
     cmd: modprobe br_netfilter
 
-- name: kubelet restart
+- name: enable kubelet
   ansible.builtin.service:
     name: kubelet
     enabled: yes

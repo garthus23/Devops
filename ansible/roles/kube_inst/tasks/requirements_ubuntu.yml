@@ -10,10 +10,7 @@
 
 
 - name: convert Gpg Key
-  ansible.builtin.shell: 
-    cmd: if [ ! -f /usr/share/keyrings/docker.gpg ]; then curl -fssl https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker.gpg; fi
-    warn: yes
-    executable: /bin/bash
+  shell: if [ ! -f /usr/share/keyrings/docker.gpg ]; then curl -fssl https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker.gpg; fi
 
 
 - name: Download Google Cloud Public signing key
@@ -29,7 +26,19 @@
       - kubelet
       - kubeadm
       - kubectl
+      - haproxy
+      - keepalived
     state: present
     update_cache: yes
-  notify:
-  - start containerd
+
+- name : Start Services Containerd
+  ansible.builtin.service:
+    name: containerd
+    state: started
+    enabled: yes 
+
+- name : Start Services Kubelet
+  ansible.builtin.service:
+    name: kubelet
+    state: stopped
+    enabled: yes 

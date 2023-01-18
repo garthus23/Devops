@@ -1,7 +1,0 @@
----
-- hosts: kube
-  roles:
-    - kube_inst
-  become: yes
-  environment:
-    https_proxy: http://172.16.0.254:55500
