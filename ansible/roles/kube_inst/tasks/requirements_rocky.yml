@@ -2,7 +2,7 @@
 
 - name: dnf repos update
   ansible.builtin.copy:
-    src: centos_repos/
+    src: rocky_repos/
     dest: /etc/yum.repos.d/
     owner: root
     group: root
@@ -14,24 +14,20 @@
 - name: Install Packages containerd, kubelet,kubeadm,kubectl
   ansible.builtin.package:
     name:
-      - containerd
-      - kubelet-1.25.5-0
+      - containerd.io
+      - kubelet
       - kubeadm
       - kubectl
       - haproxy
       - keepalived
     state: present
     update_cache: yes
-
-- name : Start Services Containerd
-  ansible.builtin.service:
-    name: containerd
-    state: started
-    enabled: yes
-
-- name : Start Services Kubelet
-  ansible.builtin.service:
-    name: kubelet
-    state: stopped
-    enabled: yes
  
+- name: copy containerd conf
+  ansible.builtin.copy:
+    src: containerd
+    dest: /etc/
+    owner: root
+    group: root
+    mode: preserve
+    force: true

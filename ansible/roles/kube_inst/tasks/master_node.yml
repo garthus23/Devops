@@ -13,13 +13,17 @@
 - name: authorize ipv4 forwarding
   shell: echo 1 > /proc/sys/net/ipv4/ip_forward
 
-- name: change Cgroup to systemd containerd
-  shell: containerd config default > /etc/containerd/config.toml
-
 - name: restart docker
   ansible.builtin.service:
     name: containerd
     state: restarted
+    enabled: true
+
+- name: restart kubelet
+  ansible.builtin.service:
+    name: kubelet
+    state: stopped
+    enabled: true
 
 - name: Initialise the Master Node
-  shell: kubeadm init --control-plane-endpoint {{ansible_default_ipv4.address}} --pod-network-cidr 172.16.0.0/16
+  shell: kubeadm init 
