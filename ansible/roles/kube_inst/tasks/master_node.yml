@@ -34,3 +34,10 @@
 - name: Initialise the Master Node
   shell: kubeadm init
   when: cluster_status.rc != 0
+
+- name: Set KUBECONFIG env
+  lineinfile:
+    dest: /etc/environment
+    state: present
+    regexp: '^KUBECONFIG'
+    line: 'KUBECONFIG=/etc/kubernetes/admin.conf'
