@@ -26,8 +26,6 @@
       - kubelet
       - kubeadm
       - kubectl
-      - haproxy
-      - keepalived
     state: present
     update_cache: yes
 

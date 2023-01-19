@@ -25,5 +25,12 @@
     state: stopped
     enabled: true
 
+- name: check if cluster was initialised 
+  shell: kubectl --kubeconfig /etc/kubernetes/admin.conf cluster-info
+  ignore_errors: yes
+  changed_when: false
+  register: cluster_status
+
 - name: Initialise the Master Node
-  shell: kubeadm init 
+  shell: kubeadm init
+  when: cluster_status.rc != 0
