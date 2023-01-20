@@ -11,27 +11,21 @@ Tested on : Rocky 9 (generic cloud image) , ubuntu 20 (generic cloud image)
 Example Playbook
 ----------------
 
----
-- hosts: allnodes
+
+```
+- hosts: all
   become: yes
   roles:
     - kubernetes
-
+```
 
 Inventory
 ----------------
-
-[allnodes]
-
 
 [masternode]
 
 
 [workers]
-
-
-
-
 
 
 Author Information
