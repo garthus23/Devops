@@ -7,8 +7,10 @@
 - include_tasks: requirements_ubuntu.yml
   when: ansible_facts['distribution'] == 'Ubuntu'
 
+- include_tasks: requirements_all.yml
+
 - include_tasks: master_node.yml
   when: inventory_hostname in groups['masternode']
 
-  #- include_tasks: workers.yml
-  # when: inventory_hostname in groups['workers']
+- include_tasks: workers.yml
+  when: inventory_hostname in groups['workers']

@@ -18,22 +18,3 @@
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
 
-
-- name: Install Packages docker,kubelet,kubeadm,kubectl
-  ansible.builtin.package:
-    name:
-      - containerd.io
-      - kubelet
-      - kubeadm
-      - kubectl
-    state: present
-    update_cache: yes
-
-- name: copy containerd conf
-  ansible.builtin.copy:
-    src: containerd
-    dest: /etc/
-    owner: root
-    group: root
-    mode: preserve
-    force: true

@@ -10,22 +10,3 @@
 
 - name: Set selinux in permissive mode
   shell: setenforce 0 && sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
-
-- name: Install Packages containerd, kubelet,kubeadm,kubectl
-  ansible.builtin.package:
-    name:
-      - containerd.io
-      - kubelet
-      - kubeadm
-      - kubectl
-    state: present
-    update_cache: yes
- 
-- name: copy containerd conf
-  ansible.builtin.copy:
-    src: containerd
-    dest: /etc/
-    owner: root
-    group: root
-    mode: preserve
-    force: true

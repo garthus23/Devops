@@ -1,0 +1,52 @@
+---
+
+- name: Install Packages docker,kubelet,kubeadm,kubectl
+  ansible.builtin.package:
+    name:
+      - containerd.io
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: present
+    update_cache: yes
+
+- name: copy containerd conf
+  ansible.builtin.copy:
+    src: containerd
+    dest: /etc/
+    owner: root
+    group: root
+    mode: preserve
+    force: true
+
+- name: load kernel parameters at startup
+  ansible.builtin.copy:
+    src: k8s.conf
+    dest: /etc/sysctl.d/
+
+- name: let iptables see bridged traffic
+  modprobe:
+    name: br_netfilter
+    state: present
+
+- name: authorize ipv4 forwarding
+  shell: echo 1 > /proc/sys/net/ipv4/ip_forward
+
+- name: restart docker
+  ansible.builtin.service:
+    name: containerd
+    state: restarted
+    enabled: true
+
+- name: restart kubelet
+  ansible.builtin.service:
+    name: kubelet
+    state: stopped
+    enabled: true
+
+- name: Set KUBECONFIG env
+  lineinfile:
+    dest: /etc/environment
+    state: present
+    regexp: '^KUBECONFIG'
+    line: 'KUBECONFIG=/etc/kubernetes/admin.conf'

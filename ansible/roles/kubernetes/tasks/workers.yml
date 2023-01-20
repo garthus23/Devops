@@ -1,0 +1,7 @@
+- name: Verify node not already join
+  shell: ls /etc/kubernetes/kubelet.conf | wc -l
+  register: join_status
+
+- name: join the master node
+  shell: kubeadm join --token {{ hostvars['tokenhost']['token'] }} {{ hostvars['tokenhost']['ip'] }}:6443 --discovery-token-ca-cert-hash sha256:{{ hostvars['tokenhost']['discovery_token'] }}
+  when: join_status.stdout != "1"

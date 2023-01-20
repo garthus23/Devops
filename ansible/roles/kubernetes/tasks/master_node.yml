@@ -1,30 +1,5 @@
 ---
 
-- name: load kernel parameters at startup
-  ansible.builtin.copy:
-    src: k8s.conf
-    dest: /etc/sysctl.d/
-
-- name: let iptables see bridged traffic
-  modprobe:
-    name: br_netfilter
-    state: present
-
-- name: authorize ipv4 forwarding
-  shell: echo 1 > /proc/sys/net/ipv4/ip_forward
-
-- name: restart docker
-  ansible.builtin.service:
-    name: containerd
-    state: restarted
-    enabled: true
-
-- name: restart kubelet
-  ansible.builtin.service:
-    name: kubelet
-    state: stopped
-    enabled: true
-
 - name: check if cluster was initialised 
   shell: kubectl --kubeconfig /etc/kubernetes/admin.conf cluster-info
   ignore_errors: yes
@@ -35,9 +10,18 @@
   shell: kubeadm init
   when: cluster_status.rc != 0
 
-- name: Set KUBECONFIG env
-  lineinfile:
-    dest: /etc/environment
-    state: present
-    regexp: '^KUBECONFIG'
-    line: 'KUBECONFIG=/etc/kubernetes/admin.conf'
+- name: Register Token
+  shell: kubeadm token list | tail -n 1 | awk '{ print $1 }'
+  register: token
+
+- name: Register Discovery Token
+  shell: openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | \
+   openssl dgst -sha256 -hex | sed 's/^.* //'
+  register: discovery_token
+
+- name: put token in Vhost
+  add_host:
+    name: "tokenhost"
+    token: "{{ token.stdout }}"
+    discovery_token: "{{ discovery_token.stdout  }}"
+    ip: "{{ ansible_default_ipv4.address }}"
