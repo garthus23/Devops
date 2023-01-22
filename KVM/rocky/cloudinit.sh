@@ -31,8 +31,9 @@ then
 fi
 genisoimage  -output $IMAGE_FOLDER/cidata.iso -V cidata -r -J user-data meta-data
 
-# launch install
-virt-install --connect qemu:///system --virt-type kvm --name $IMAGE_NAME --ram 2048 --vcpus=2 --os-variant rhl9 --import --disk path=$DISK_FOLDER/$IMAGE_NAME.qcow2,format=qcow2 --disk path=$IMAGE_FOLDER/cidata.iso,device=cdrom --network network=$NET --noautoconsole # enable graphic --graphics spice,listen=127.0.0.1 
+# launch install 
+#--graphics spice,listen=127.0.0.1 
+virt-install --connect qemu:///system --virt-type kvm --name $IMAGE_NAME --ram 2048 --vcpus=2 --os-variant rhl9 --import --disk path=$DISK_FOLDER/$IMAGE_NAME.qcow2,format=qcow2 --disk path=$IMAGE_FOLDER/cidata.iso,device=cdrom --network network=$NET --noautoconsole --graphics none
 
 # detach cdrom on next boot
 virsh change-media $IMAGE_NAME $IMAGE_FOLDER/cidata.iso --config --eject
