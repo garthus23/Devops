@@ -25,3 +25,25 @@
     token: "{{ token.stdout }}"
     discovery_token: "{{ discovery_token.stdout  }}"
     ip: "{{ ansible_default_ipv4.address }}"
+
+- name: Set KUBECONFIG env
+  lineinfile:
+    dest: /etc/environment
+    state: present
+    regexp: '^KUBECONFIG'
+    line: 'KUBECONFIG=/etc/kubernetes/admin.conf'
+
+- name: Register Calico CNI Plugin
+  ansible.builtin.get_url:
+    url: https://docs.projectcalico.org/manifests/calico.yaml
+    dest: /root/calico.yaml
+
+- name: Check Calico was not installed
+  shell: kubectl get pod --all-namespaces | grep calico | wc -l
+  ignore_errors: yes
+  changed_when: false
+  register: calico
+
+- name: Install Calico Network
+  shell: kubectl apply -f /root/calico.yaml
+  when: calico.stdout == "0"

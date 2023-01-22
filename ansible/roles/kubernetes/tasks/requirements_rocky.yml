@@ -10,3 +10,14 @@
 
 - name: Set selinux in permissive mode
   shell: setenforce 0 && sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+
+- name: resolv conf dir
+  ansible.builtin.file:
+    path: /var/run/systemd/resolve/
+    state: directory
+
+- name: symbolic link of resolv file
+  ansible.builtin.file:
+    src: /etc/resolv.conf
+    path: /var/run/systemd/resolve/resolv.conf
+    state: link

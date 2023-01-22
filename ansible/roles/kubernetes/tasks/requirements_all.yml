@@ -43,10 +43,3 @@
     name: kubelet
     state: stopped
     enabled: true
-
-- name: Set KUBECONFIG env
-  lineinfile:
-    dest: /etc/environment
-    state: present
-    regexp: '^KUBECONFIG'
-    line: 'KUBECONFIG=/etc/kubernetes/admin.conf'
