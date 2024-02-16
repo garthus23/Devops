@@ -3,12 +3,14 @@
 - name: Install Packages docker,kubelet,kubeadm,kubectl
   ansible.builtin.package:
     name:
-      - containerd.io
+      - containerd
       - kubelet
       - kubeadm
       - kubectl
     state: present
     update_cache: yes
+    update_cache_retry_max_delay: 10
+    lock_timeout: 60
 
 - name: copy containerd conf
   ansible.builtin.copy:

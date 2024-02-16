@@ -1,20 +1,33 @@
 ---
 
-- name: Apt repos update
+- name: set Ntp conf
   ansible.builtin.copy:
-    src: ubuntu_repos/
-    dest: /etc/apt/sources.list.d/
-    owner: root
-    group: root
-    mode: '0644'
+    src: ntp.conf
+    dest: /etc/systemd/timesyncd.conf.d/
+
+- name: restart time service
+  ansible.builtin.service:
+    name: systemd-timesyncd.service
+    state: restarted
+
+- name: Create apt keyring repo
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: 755
+
+- name: Download Kubernetes key
+  get_url:
+    url: https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key
+    dest: /etc/apt/keyrings/kubernetes-apt-keyring.asc
+    mode: 0644
+
+- name: Wait for automatic system updates
+  shell: "while fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do sleep 1; done;"
 
 
-- name: convert Gpg Key
-  shell: if [ ! -f /usr/share/keyrings/docker.gpg ]; then curl -fssl https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker.gpg; fi
-
-
-- name: Download Google Cloud Public signing key
-  ansible.builtin.get_url:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
-
+- name: set kubernetes repository
+  apt_repository:
+    filename: kubernetes
+    repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /"
+    state: present
