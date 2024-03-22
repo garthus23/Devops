@@ -3,6 +3,12 @@ variable "vmnumber" {
   default = 2
 }
 
+variable "imgsrc" {
+  type = string
+  default = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img" 
+}
+
+
 variable "netrange" {
   type   = list(object({
     subnet = string

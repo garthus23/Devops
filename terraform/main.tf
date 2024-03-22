@@ -13,7 +13,7 @@ provider "libvirt" {
 resource "libvirt_volume" "ubuntu22" {
   name   = "ubuntu22.qcow2"
   pool   = "isos"
-  source = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
+  source = var.imgsrc
   format = "qcow2"
 }
 
