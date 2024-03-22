@@ -15,9 +15,6 @@ some changes are needed in Apparmor/Selinux...
 Apparmor changes:
 
 cat /etc/apparmor.d/libvirt/TEMPLATE.qemu
-#
-# This profile is for the domain whose UUID matches this file.
-#
 
 #include <tunables/global>
 
