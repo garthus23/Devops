@@ -22,6 +22,7 @@ resource "libvirt_volume" "node_disk" {
   name           = "node-${count.index}.qcow2"
   pool           = "Disks"
   base_volume_id = libvirt_volume.ubuntu22.id
+  size           = "53687091200"
 }
 
 
