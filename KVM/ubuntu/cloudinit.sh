@@ -26,7 +26,8 @@ if [[ $IMAGE_FOLDER/cidata.iso ]]
 then
 	rm -f $IMAGE_FOLDER/cidata.iso
 fi
-genisoimage  -output $IMAGE_FOLDER/cidata.iso -V cidata -r -J user-data meta-data
+#genisoimage  -output $IMAGE_FOLDER/cidata.iso -V cidata -r -J user-data meta-data
+xorriso -as mkisofs  -output $IMAGE_FOLDER/cidata.iso -V cidata -r -J user-data meta-data
 
 # launch install
 #--graphics spice,listen=127.0.0.1 

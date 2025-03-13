@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE_NAME=sat1
-IMAGE_FOLDER='/opt/data/isos'
-DISK_FOLDER='/opt/data/disks'
+IMAGE_NAME=test
+IMAGE_FOLDER='/var/lib/libvirt/isos'
+DISK_FOLDER='/var/lib/libvirt/images'
 NET='default'
