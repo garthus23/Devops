@@ -31,8 +31,8 @@ then
 	then
 		echo './snapshot.sh revert $domain $snapshotname'
 	else
-		diskdev=$(virsh domblklist $2 | grep "$2.$3" | grep -Eo '[aA-zZ].+ ')
-		dpath=$(virsh domblklist gentoo | grep gentoo.toto | grep -Eo '\/.*\/')
+		diskdev=$(virsh domblklist $2 | grep "$2" | grep -Eo '[aA-zZ].+ ')
+		dpath=$(virsh domblklist $2 | grep "$2" | grep -Eo '\/.*\/')
 		virsh destroy $2
 		virt-xml $2 --remove-device --disk target=$diskdev 
 		virt-xml $2 --add-device --disk ${dpath}$2.qcow2,target=$diskdev 
