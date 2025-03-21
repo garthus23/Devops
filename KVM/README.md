@@ -1,7 +1,7 @@
 
 ### Create VM :
 ```
-./on_demand.sh <DIST> <VMNAME>
+./cloudinit.sh <DIST> <VMNAME>
 ```
 2 DIST available : centos or ubuntu
 

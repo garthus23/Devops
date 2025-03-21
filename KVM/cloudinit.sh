@@ -1,6 +1,11 @@
 #!/bin/bash
 # cloud image deploy Rocky Linux 9 on Qemu/KVM
 
+export VIRSH_DEFAULT_CONNECT_URI='qemu:///system'
+
+sed -i s/"IMAGE_NAME.*"/"IMAGE_NAME=$2"/g vars.sh
+echo "local-hostname: $2" > meta-data
+
 # set var file 
 if [[ -f ./vars.sh ]]
 then
